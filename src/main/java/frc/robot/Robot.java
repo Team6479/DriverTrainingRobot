@@ -7,9 +7,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.OI;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -88,7 +91,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-
+        
     }
 
     /**
@@ -96,7 +99,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        SmartDashboard.putNumber("X-Axis", oi.stick.getX());
+        SmartDashboard.putNumber("Y-Axis", oi.stick.getY());
+        SmartDashboard.putNumber("Z-Axis", oi.stick.getZ());
+        SmartDashboard.putNumber("Throttle", oi.stick.getThrottle());
     }
 
     /**
