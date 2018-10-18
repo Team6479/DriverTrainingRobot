@@ -31,8 +31,8 @@ public class RobotMap {
     // Drivetrain Motors
     public static int leftFront = 0;
     public static int leftBack = 1;
-    public static int rightFront = 3;
-    public static int rightBack = 4;
+    public static int rightFront = 2;
+    public static int rightBack = 3;
 
     // DIO
     // Drivetrain Encoders

@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -27,7 +28,8 @@ public class TeleopDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        
+        //Execute arcadeDrive with the x axis and y axis
+        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getY(), Robot.oi.stick.getZ());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +38,6 @@ public class TeleopDrive extends Command {
         return false;
     }
 
-    // Called once after isFinished returns true
     @Override
     protected void end() {
     }
