@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -46,8 +45,11 @@ public class Drivetrain extends Subsystem {
 
         drivetrain = new DifferentialDrive(leftSide, rightSide);
 
-        encoderLeft = new Encoder(RobotMap.endoderLeft1, RobotMap.encoderLeft2);
-        encoderRight = new Encoder(RobotMap.encoderRight1, RobotMap.encoderRight2);
+        encoderLeft = new Encoder(RobotMap.endoderLeft1, RobotMap.encoderLeft2,true,Encoder.EncodingType.k1X);
+        encoderRight = new Encoder(RobotMap.encoderRight1, RobotMap.encoderRight2,false,Encoder.EncodingType.k1X);
+
+        encoderLeft.setDistancePerPulse(1440);
+        encoderRight.setDistancePerPulse(1440);
     }
 
     @Override
@@ -59,6 +61,19 @@ public class Drivetrain extends Subsystem {
         drivetrain.arcadeDrive(speed, rotation);
     }
 
+    public double getEncoderAverage() {
+        return (encoderLeft.get() + encoderRight.get()) / 2;
+    }
 
+    public DifferentialDrive getDrivetrain() {
+        return drivetrain;
+    }
 
+    public Encoder getEndoderLeft() {
+        return encoderLeft;
+    }
+
+    public Encoder getEndoderRight() {
+        return encoderRight;
+    }
 }

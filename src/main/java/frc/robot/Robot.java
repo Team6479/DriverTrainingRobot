@@ -10,7 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.EncoderDrive;
+import frc.robot.commands.Reset;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -34,6 +35,9 @@ public class Robot extends TimedRobot {
         drivetrain = new Drivetrain();
 
         oi = new OI();
+
+        SmartDashboard.putData(new EncoderDrive(36));
+        SmartDashboard.putData(new Reset());
     }
 
     /**
@@ -47,6 +51,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
+        SmartDashboard.putNumber("Left Encoder", drivetrain.getEndoderLeft().get());
+        SmartDashboard.putNumber("Right Encoder", drivetrain.getEndoderRight().get());
+        SmartDashboard.putNumber("Encoder Average", drivetrain.getEncoderAverage());
     }
 
     /**

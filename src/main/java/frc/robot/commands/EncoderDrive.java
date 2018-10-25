@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,38 +7,40 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-/**
- * An example command. You can replace me with your own command.
- */
-public class TeleopDrive extends Command {
-    public TeleopDrive() {
+public class EncoderDrive extends Command {
+    private double distance;
+    
+    public EncoderDrive(double distance) {
         // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
         requires(Robot.drivetrain);
+
+        this.distance = distance;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+        Robot.drivetrain.getEndoderLeft().reset();
+        // Robot.drivetrain.getEndoderRight().reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        //Execute arcadeDrive with the x axis and y axis
-        Robot.drivetrain.arcadeDrive(Robot.oi.controller.getX(Hand.kLeft), Robot.oi.controller.getY(Hand.kLeft));
-        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getY(), Robot.oi.stick.getZ());
+        Robot.drivetrain.arcadeDrive(0.5, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return Robot.drivetrain.getEndoderLeft().get() >= distance;
     }
 
+    // Called once after isFinished returns true
     @Override
     protected void end() {
     }

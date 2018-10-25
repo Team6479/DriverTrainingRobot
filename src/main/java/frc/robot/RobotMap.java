@@ -25,19 +25,19 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 
     // Controllers
-    public static int joystick = 0;
+    public final static int joystick = 0;
     
     // PWM
     // Drivetrain Motors
-    public static int leftFront = 0;
-    public static int leftBack = 1;
-    public static int rightFront = 2;
-    public static int rightBack = 3;
+    public final static int leftFront = 0;
+    public final static int leftBack = 1;
+    public final static int rightFront = 2;
+    public final static int rightBack = 3;
 
     // DIO
     // Drivetrain Encoders
-    public static int endoderLeft1 = 0;
-    public static int encoderLeft2 = 1;
-    public static int encoderRight1 = 2;
-    public static int encoderRight2 = 3;
+    public final static int endoderLeft1 = 0;
+    public final static int encoderLeft2 = 1;
+    public final static int encoderRight1 = 2;
+    public final static int encoderRight2 = 3;
 }
