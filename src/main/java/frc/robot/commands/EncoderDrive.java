@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class EncoderDrive extends Command {
     private double distance;
-    
+
     public EncoderDrive(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,7 +24,7 @@ public class EncoderDrive extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        Robot.drivetrain.getEndoderLeft().reset();
+        // Robot.drivetrain.getEndoderLeft().reset();
         // Robot.drivetrain.getEndoderRight().reset();
     }
 
@@ -37,7 +37,8 @@ public class EncoderDrive extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return Robot.drivetrain.getEndoderLeft().get() >= distance;
+        // return Robot.drivetrain.getEndoderLeft().get() >= distance;
+        return false;
     }
 
     // Called once after isFinished returns true

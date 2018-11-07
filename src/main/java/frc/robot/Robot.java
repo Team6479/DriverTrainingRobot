@@ -22,7 +22,7 @@ import frc.robot.subsystems.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
-    
+
     public static Drivetrain drivetrain;
     public static OI oi;
 
@@ -51,9 +51,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("Left Encoder", drivetrain.getEndoderLeft().get());
-        SmartDashboard.putNumber("Right Encoder", drivetrain.getEndoderRight().get());
-        SmartDashboard.putNumber("Encoder Average", drivetrain.getEncoderAverage());
+        // SmartDashboard.putNumber("Left Encoder", drivetrain.getEndoderLeft().get());
+        // SmartDashboard.putNumber("Right Encoder", drivetrain.getEndoderRight().get());
+        // SmartDashboard.putNumber("Encoder Average", drivetrain.getEncoderAverage());
     }
 
     /**
@@ -93,14 +93,11 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         // drivetrain.arcadeDrive(0.5, 0);
-        // 
         Scheduler.getInstance().run();
     }
 
     @Override
     public void teleopInit() {
-        // new TeleopDrive().start();
-        
     }
 
     /**
