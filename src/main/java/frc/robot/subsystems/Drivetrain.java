@@ -7,12 +7,11 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.TeleopDrive;
 
@@ -21,35 +20,24 @@ import frc.robot.commands.TeleopDrive;
  */
 public class Drivetrain extends Subsystem {
     // Declare 4 Motor Controllers
-    private SpeedController leftFront;
-    private SpeedController leftBack;
-    private SpeedController rightFront;
-    private SpeedController rightBack;
-    // Declare 2 Groups For Sides
-    private SpeedController leftSide;
-    private SpeedController rightSide;
-
-    private DifferentialDrive drivetrain;
-
-    private Encoder encoderLeft;
-    private Encoder encoderRight;
+    // Left Front Motor (Master)
+    private TalonSRX leftMaster;
+    // Left Back Motor (Slave)
+    private TalonSRX leftSlave;
+    // Right Front Motor (Master)
+    private TalonSRX rightMaster;
+    // Right Back Motor (Slave)
+    private TalonSRX rightSlave;
 
     public Drivetrain() {
-        leftFront = new Spark(RobotMap.leftFront);
-        leftBack = new Spark(RobotMap.leftBack);
-        rightFront = new Spark(RobotMap.rightFront);
-        rightBack = new Spark(RobotMap.rightBack);
-
-        leftSide = new SpeedControllerGroup(leftFront, leftBack);
-        rightSide = new SpeedControllerGroup(rightFront, rightBack);
-
-        drivetrain = new DifferentialDrive(leftSide, rightSide);
-
-        encoderLeft = new Encoder(RobotMap.endoderLeft1, RobotMap.encoderLeft2,true,Encoder.EncodingType.k1X);
-        encoderRight = new Encoder(RobotMap.encoderRight1, RobotMap.encoderRight2,false,Encoder.EncodingType.k1X);
-
-        encoderLeft.setDistancePerPulse(1440);
-        encoderRight.setDistancePerPulse(1440);
+        // Init Master Motors
+        leftMaster = new TalonSRX(RobotMap.leftFront);
+        rightMaster = new TalonSRX(RobotMap.rightFront);
+        // Init Slave Motors and tell them to follow their respective masters
+        leftSlave = new TalonSRX(RobotMap.leftBack);
+        leftSlave.follow(leftMaster);
+        rightSlave = new TalonSRX(RobotMap.rightBack);
+        rightSlave.follow(rightMaster);
     }
 
     @Override
@@ -58,22 +46,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        drivetrain.arcadeDrive(speed, rotation);
-    }
-
-    public double getEncoderAverage() {
-        return (encoderLeft.get() + encoderRight.get()) / 2;
-    }
-
-    public DifferentialDrive getDrivetrain() {
-        return drivetrain;
-    }
-
-    public Encoder getEndoderLeft() {
-        return encoderLeft;
-    }
-
-    public Encoder getEndoderRight() {
-        return encoderRight;
+        leftMaster.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, rotation);
+        rightMaster.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -rotation);
     }
 }
