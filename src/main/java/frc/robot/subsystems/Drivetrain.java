@@ -9,12 +9,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.talonsrxprofiles.DefaultTalonSRXProfile;
+import frc.robot.util.TalonSRXProfile;
 
 /**
  * An example subsystem. You can replace me with your own Subsystem.
@@ -40,17 +41,13 @@ public class Drivetrain extends Subsystem {
         rightSlave = new TalonSRX(RobotMap.rightBack);
         rightSlave.follow(rightMaster);
 
-        // Set Neutral mode
-		leftMaster.setNeutralMode(NeutralMode.Brake);
-        leftSlave.setNeutralMode(NeutralMode.Brake);
-        rightMaster.setNeutralMode(NeutralMode.Brake);
-        rightSlave.setNeutralMode(NeutralMode.Brake);
-
         // Set output direction
         leftMaster.setInverted(false);
         leftSlave.setInverted(false);
         rightMaster.setInverted(true);
         rightSlave.setInverted(true);
+
+        TalonSRXProfile.applyTalonSRXProfile(new DefaultTalonSRXProfile(), leftMaster, leftSlave, rightMaster, rightSlave);
     }
 
     @Override
