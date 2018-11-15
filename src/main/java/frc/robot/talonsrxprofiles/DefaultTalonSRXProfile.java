@@ -8,7 +8,6 @@ public class DefaultTalonSRXProfile implements TalonSRXProfile {
 
     @Override
     public NeutralMode getNeutralMode() {
-        System.out.println("Neutral Mode Set To Brake");
 		return NeutralMode.Brake;
 	}
 
