@@ -19,7 +19,7 @@ import frc.robot.talonsrxprofiles.DefaultTalonSRXProfile;
 import frc.robot.util.TalonSRXProfile;
 
 /**
- * An example subsystem. You can replace me with your own Subsystem.
+ * Drivetrain class
  */
 public class Drivetrain extends Subsystem {
     public enum Side {

@@ -25,19 +25,34 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
 
     // Controllers
-    public final static int joystick = 0;
-    
+    public static final int joystick = 0;
+
+    // Joystick Buttons
+    public static final int joystickButton1 = 1;
+    public static final int joystickButton2 = 2;
+    public static final int joystickButton3 = 3;
+    public static final int joystickButton4 = 4;
+    public static final int joystickButton5 = 5;
+    public static final int joystickButton6 = 6;
+    public static final int joystickButton7 = 7;
+    public static final int joystickButton8 = 8;
+    public static final int joystickButton9 = 9;
+    public static final int joystickButton10 = 10;
+    public static final int joystickButton11 = 11;
+    public static final int joystickButton12 = 12;
+    public static final int joystickButton13 = 13;
+
     // PWM
     // Drivetrain Motors
-    public final static int leftFront = 0;
-    public final static int leftBack = 1;
-    public final static int rightFront = 2;
-    public final static int rightBack = 3;
+    public static final int leftFront = 0;
+    public static final int leftBack = 1;
+    public static final int rightFront = 2;
+    public static final int rightBack = 3;
 
     // DIO
     // Drivetrain Encoders
-    public final static int endoderLeft1 = 0;
-    public final static int encoderLeft2 = 1;
-    public final static int encoderRight1 = 2;
-    public final static int encoderRight2 = 3;
+    public static final int endoderLeft1 = 0;
+    public static final int encoderLeft2 = 1;
+    public static final int encoderRight1 = 2;
+    public static final int encoderRight2 = 3;
 }

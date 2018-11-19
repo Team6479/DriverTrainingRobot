@@ -5,6 +5,13 @@ plugins {
 
 def ROBOT_CLASS = "frc.robot.Robot"
 
+repositories {
+    mavenCentral()
+    maven {
+         url  "https://jitpack.io"
+    }
+}
+
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
@@ -29,6 +36,7 @@ deploy {
 // Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
 // and NavX.
 dependencies {
+    compile group: 'com.github.team6479', name: 'RobotLibrary', version: '1.0.0'
     compile wpilib()
     compile ctre()
     compile navx()
