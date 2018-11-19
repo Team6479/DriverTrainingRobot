@@ -7,49 +7,68 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.talonsrxprofiles.DefaultTalonSRXProfile;
+import frc.robot.util.TalonSRXProfile;
 
 /**
  * An example subsystem. You can replace me with your own Subsystem.
  */
 public class Drivetrain extends Subsystem {
+    public enum Side {
+        Left, Right, Average;
+    }
+
+    // Units are in metric
+    public enum Unit {
+        Rotations, Meters;
+    }
+
+    // Diameter of the wheel in meters
+    private final double WHEEL_DIAMETER = 0.1524;
+    // Cycles per rotation of the encoder
+    private final double CPR = 4096;
+
     // Declare 4 Motor Controllers
-    private SpeedController leftFront;
-    private SpeedController leftBack;
-    private SpeedController rightFront;
-    private SpeedController rightBack;
-    // Declare 2 Groups For Sides
-    private SpeedController leftSide;
-    private SpeedController rightSide;
-
-    private DifferentialDrive drivetrain;
-
-    private Encoder encoderLeft;
-    private Encoder encoderRight;
+    // Left Front Motor (Master)
+    private TalonSRX leftMaster;
+    // Left Back Motor (Slave)
+    private TalonSRX leftSlave;
+    // Right Front Motor (Master)
+    private TalonSRX rightMaster;
+    // Right Back Motor (Slave)
+    private TalonSRX rightSlave;
 
     public Drivetrain() {
-        leftFront = new Spark(RobotMap.leftFront);
-        leftBack = new Spark(RobotMap.leftBack);
-        rightFront = new Spark(RobotMap.rightFront);
-        rightBack = new Spark(RobotMap.rightBack);
+        // Init Master Motors
+        leftMaster = new TalonSRX(RobotMap.leftFront);
+        rightMaster = new TalonSRX(RobotMap.rightFront);
+        // Init Slave Motors and tell them to follow their respective masters
+        leftSlave = new TalonSRX(RobotMap.leftBack);
+        leftSlave.follow(leftMaster);
+        rightSlave = new TalonSRX(RobotMap.rightBack);
+        rightSlave.follow(rightMaster);
 
-        leftSide = new SpeedControllerGroup(leftFront, leftBack);
-        rightSide = new SpeedControllerGroup(rightFront, rightBack);
+        // Set output direction
+        leftMaster.setInverted(false);
+        leftSlave.setInverted(false);
+        rightMaster.setInverted(true);
+        rightSlave.setInverted(true);
 
-        drivetrain = new DifferentialDrive(leftSide, rightSide);
+        TalonSRXProfile.applyTalonSRXProfile(new DefaultTalonSRXProfile(), leftMaster, leftSlave, rightMaster, rightSlave);
 
-        encoderLeft = new Encoder(RobotMap.endoderLeft1, RobotMap.encoderLeft2,true,Encoder.EncodingType.k1X);
-        encoderRight = new Encoder(RobotMap.encoderRight1, RobotMap.encoderRight2,false,Encoder.EncodingType.k1X);
-
-        encoderLeft.setDistancePerPulse(1440);
-        encoderRight.setDistancePerPulse(1440);
+        // Add Mag Encoders
+        int timeoutMs = 0;
+        leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, timeoutMs);
+        rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, timeoutMs);
+        resetEncoders(); 
     }
 
     @Override
@@ -58,22 +77,68 @@ public class Drivetrain extends Subsystem {
     }
 
     public void arcadeDrive(double speed, double rotation) {
-        drivetrain.arcadeDrive(speed, rotation);
+        leftMaster.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, rotation);
+        rightMaster.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -rotation);
     }
 
-    public double getEncoderAverage() {
-        return (encoderLeft.get() + encoderRight.get()) / 2;
+    public void resetEncoders() {
+        leftMaster.setSelectedSensorPosition(0, 0, 0);
+        rightMaster.setSelectedSensorPosition(0, 0, 0);
     }
 
-    public DifferentialDrive getDrivetrain() {
-        return drivetrain;
+    public double getPosition(Side side) {
+        if (side == Side.Left) {
+            return leftMaster.getSelectedSensorPosition(0);
+        }
+        else if (side == Side.Right) {
+            return rightMaster.getSelectedSensorPosition(0);
+        }
+        else {
+            return Math.abs(leftMaster.getSelectedSensorPosition(0)) + Math.abs(rightMaster.getSelectedSensorPosition(0)) / 2;
+        }
     }
 
-    public Encoder getEndoderLeft() {
-        return encoderLeft;
+    public double getPosition(Side side, Unit unit) {
+        double rawPosition = getPosition(side);
+        double rotationsPosition = rawPosition / CPR;
+
+        if (unit == Unit.Rotations) {
+            return rotationsPosition;
+        }
+        else if (unit == Unit.Meters) {
+            return rotationsPosition * (Math.PI * WHEEL_DIAMETER);
+        }
+        else {
+            // If for some reason the unit does not match any of these return the raw value
+            return rawPosition;
+        }
     }
 
-    public Encoder getEndoderRight() {
-        return encoderRight;
+    public double getVelocity(Side side) {
+        if (side == Side.Left) {
+            return leftMaster.getSelectedSensorVelocity(0);
+        }
+        else if (side == Side.Right) {
+            return rightMaster.getSelectedSensorVelocity(0);
+        }
+        else {
+            return (Math.abs(leftMaster.getSelectedSensorVelocity(0)) + Math.abs(rightMaster.getSelectedSensorVelocity(0))) / 2;
+        }
+    }
+
+    public double getVelocity(Side side, Unit unit) {
+        double rawVelocity = getVelocity(side);
+        double rotationsVelocity = rawVelocity / CPR;
+
+        if (unit == Unit.Rotations) {
+            return rotationsVelocity;
+        }
+        else if (unit == Unit.Meters) {
+            return rotationsVelocity * (Math.PI * WHEEL_DIAMETER);
+        }
+        else {
+            // If for some reason the unit does not match any of the above return the raw velocity
+            return rawVelocity;
+        }
     }
 }

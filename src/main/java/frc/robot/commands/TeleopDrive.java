@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -29,8 +28,8 @@ public class TeleopDrive extends Command {
     @Override
     protected void execute() {
         //Execute arcadeDrive with the x axis and y axis
-        Robot.drivetrain.arcadeDrive(Robot.oi.controller.getX(Hand.kLeft), Robot.oi.controller.getY(Hand.kLeft));
-        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getY(), Robot.oi.stick.getZ());
+        // Robot.drivetrain.arcadeDrive(Robot.oi.controller.getX(Hand.kLeft), Robot.oi.controller.getY(Hand.kLeft));
+        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getRawAxis(1), Robot.oi.stick.getRawAxis(2));
     }
 
     // Make this return true when this Command no longer needs to run execute()

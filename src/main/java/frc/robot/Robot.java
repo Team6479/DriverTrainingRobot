@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.EncoderDrive;
 import frc.robot.commands.Reset;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Drivetrain.Side;
+import frc.robot.subsystems.Drivetrain.Unit;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,7 +24,7 @@ import frc.robot.subsystems.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
-    
+
     public static Drivetrain drivetrain;
     public static OI oi;
 
@@ -51,9 +53,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-        SmartDashboard.putNumber("Left Encoder", drivetrain.getEndoderLeft().get());
-        SmartDashboard.putNumber("Right Encoder", drivetrain.getEndoderRight().get());
-        SmartDashboard.putNumber("Encoder Average", drivetrain.getEncoderAverage());
+        // SmartDashboard.putNumber("Left Encoder", drivetrain.getEndoderLeft().get());
+        // SmartDashboard.putNumber("Right Encoder", drivetrain.getEndoderRight().get());
+        // SmartDashboard.putNumber("Encoder Average", drivetrain.getEncoderAverage());
     }
 
     /**
@@ -84,7 +86,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-
     }
 
     /**
@@ -93,14 +94,11 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         // drivetrain.arcadeDrive(0.5, 0);
-        // 
         Scheduler.getInstance().run();
     }
 
     @Override
     public void teleopInit() {
-        // new TeleopDrive().start();
-        
     }
 
     /**
@@ -113,6 +111,18 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Y-Axis", oi.stick.getY());
         SmartDashboard.putNumber("Z-Axis", oi.stick.getZ());
         SmartDashboard.putNumber("Throttle", oi.stick.getThrottle());
+
+        SmartDashboard.putNumber("Left Velocity", drivetrain.getVelocity(Side.Left, Unit.Meters));
+        SmartDashboard.putNumber("Right Velocity", drivetrain.getVelocity(Side.Right, Unit.Meters));
+        SmartDashboard.putNumber("Average Velocity", drivetrain.getVelocity(Side.Average, Unit.Meters));
+        SmartDashboard.putNumber("Left Raw Velocity", drivetrain.getVelocity(Side.Left));
+        SmartDashboard.putNumber("Right Raw Velocity", drivetrain.getVelocity(Side.Right));
+        SmartDashboard.putNumber("Average Raw Velocity", drivetrain.getVelocity(Side.Average));
+        SmartDashboard.putNumber("Left Position", drivetrain.getPosition(Side.Left, Unit.Meters));
+        SmartDashboard.putNumber("Right Position", drivetrain.getPosition(Side.Right, Unit.Meters));
+        SmartDashboard.putNumber("Left Raw Position", drivetrain.getPosition(Side.Left));
+        SmartDashboard.putNumber("Right Raw Position", drivetrain.getPosition(Side.Right));
+        SmartDashboard.putNumber("Average Postion", drivetrain.getPosition(Side.Average, Unit.Meters));
 
         Scheduler.getInstance().run();
     }

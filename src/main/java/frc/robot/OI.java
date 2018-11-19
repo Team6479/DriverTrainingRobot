@@ -7,7 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.drivers.Joystick;
@@ -24,8 +23,6 @@ public class OI {
     // number it is.
     public Joystick stick = new Joystick(RobotMap.joystick);
     public Button button = new JoystickButton(stick, 0);
-
-    public XboxController controller = new XboxController(0);
 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
