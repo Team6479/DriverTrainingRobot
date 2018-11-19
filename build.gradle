@@ -5,6 +5,13 @@ plugins {
 
 def ROBOT_CLASS = "frc.robot.Robot"
 
+repositories {
+    mavenCentral()
+    maven {
+         url  "https://jitpack.io"
+    }
+}
+
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project EmbeddedTools.
 deploy {
