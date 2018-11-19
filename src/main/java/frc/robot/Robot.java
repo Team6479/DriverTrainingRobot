@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.EncoderDrive;
@@ -104,7 +105,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         // new TeleopDrive().start();
-
+        Rotate rotate = new Rotate();
     }
 
     /**
@@ -133,7 +134,7 @@ public class Robot extends TimedRobot {
 
         // Run commands while button is active
         oi.trigger.whileActive(new StraightDrive());
-        oi.sideButton.whileActive(new Rotate());
+        new Rotate();
         Scheduler.getInstance().run();
     }
 
