@@ -22,7 +22,9 @@ public class OI {
   // You create one by telling it which joystick it's on and which button
   // number it is.
   public Joystick stick = new Joystick(RobotMap.joystick);
-  public Button button = new JoystickButton(stick, 0);
+  public Button trigger = new JoystickButton(stick, RobotMap.joystickButton1);
+  public Button sideButton = new JoystickButton(stick, RobotMap.joystickButton2);
+  public Button rightButton = new JoystickButton(stick, RobotMap.joystickButton13);
 
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

@@ -26,7 +26,22 @@ public class RobotMap {
 
     // Controllers
     public static int joystick = 0;
-    
+
+    // Joystick Buttons
+    public static int joystickButton1 = 1;
+    public static int joystickButton2 = 2;
+    public static int joystickButton3 = 3;
+    public static int joystickButton4 = 4;
+    public static int joystickButton5 = 5;
+    public static int joystickButton6 = 6;
+    public static int joystickButton7 = 7;
+    public static int joystickButton8 = 8;
+    public static int joystickButton9 = 9;
+    public static int joystickButton10 = 10;
+    public static int joystickButton11 = 11;
+    public static int joystickButton12 = 12;
+    public static int joystickButton13 = 13;
+
     // PWM
     // Drivetrain Motors
     public static int leftFront = 0;

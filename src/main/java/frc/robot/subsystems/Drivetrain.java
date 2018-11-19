@@ -18,7 +18,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.TeleopDrive;
 
 /**
- * An example subsystem. You can replace me with your own Subsystem.
+ * Drivetrain class
  */
 public class Drivetrain extends Subsystem {
     // Declare 4 Motor Controllers
@@ -58,7 +58,5 @@ public class Drivetrain extends Subsystem {
     public void arcadeDrive(double speed, double rotation) {
         drivetrain.arcadeDrive(speed, rotation);
     }
-
-
 
 }

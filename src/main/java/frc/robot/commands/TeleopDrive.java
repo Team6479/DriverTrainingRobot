@@ -15,6 +15,8 @@ import frc.robot.Robot;
  * An example command. You can replace me with your own command.
  */
 public class TeleopDrive extends Command {
+    private double scale;
+
     public TeleopDrive() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drivetrain);
@@ -28,8 +30,11 @@ public class TeleopDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        //Execute arcadeDrive with the x axis and y axis
-        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getY(), Robot.oi.stick.getZ());
+        // Execute arcadeDrive with the x axis and y axis
+
+        // Scales the throttle from -1, 1 to 0, 1
+        scale = (Robot.oi.stick.getThrottle() + 1) / 2;
+        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getY() * scale, Robot.oi.stick.getZ() * scale);
     }
 
     // Make this return true when this Command no longer needs to run execute()
