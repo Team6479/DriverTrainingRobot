@@ -62,18 +62,25 @@ public class Drivetrain extends Subsystem {
         rightMaster.setInverted(true);
         rightSlave.setInverted(true);
 
+        leftMaster.getSensorCollection().getPulseWidthPosition();
+
         TalonSRXProfile.applyTalonSRXProfile(new DefaultTalonSRXProfile(), leftMaster, leftSlave, rightMaster, rightSlave);
 
         // Add Mag Encoders
         int timeoutMs = 0;
         leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, timeoutMs);
         rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, timeoutMs);
-        resetEncoders(); 
+        resetEncoders();
     }
 
     @Override
     public void initDefaultCommand() {
         setDefaultCommand(new TeleopDrive());
+    }
+
+    public void set(ControlMode controlMode, double speed) {
+        leftMaster.set(controlMode, speed);
+        rightMaster.set(controlMode, speed);
     }
 
     public void arcadeDrive(double speed, double rotation) {
@@ -94,7 +101,7 @@ public class Drivetrain extends Subsystem {
             return rightMaster.getSelectedSensorPosition(0);
         }
         else {
-            return Math.abs(leftMaster.getSelectedSensorPosition(0)) + Math.abs(rightMaster.getSelectedSensorPosition(0)) / 2;
+            return (Math.abs(leftMaster.getSelectedSensorPosition(0)) + Math.abs(rightMaster.getSelectedSensorPosition(0))) / 2;
         }
     }
 

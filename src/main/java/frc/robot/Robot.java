@@ -14,7 +14,6 @@ import frc.robot.commands.EncoderDrive;
 import frc.robot.commands.Reset;
 import frc.robot.commands.Rotate;
 import frc.robot.commands.StraightDrive;
-import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.Side;
 import frc.robot.subsystems.Drivetrain.Unit;
@@ -41,7 +40,7 @@ public class Robot extends TimedRobot {
 
         oi = new OI();
 
-        SmartDashboard.putData(new EncoderDrive(36));
+        SmartDashboard.putData(new EncoderDrive(1));
         SmartDashboard.putData(new Reset());
     }
 
@@ -97,14 +96,11 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        // drivetrain.arcadeDrive(0.5, 0);
         Scheduler.getInstance().run();
     }
 
     @Override
     public void teleopInit() {
-        // new TeleopDrive().start();
-
     }
 
     /**
@@ -113,27 +109,28 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         // Display axis of the joystick and value of throttle
-        SmartDashboard.putNumber("X-Axis", oi.stick.getX());
-        SmartDashboard.putNumber("Y-Axis", oi.stick.getY());
-        SmartDashboard.putNumber("Z-Axis", oi.stick.getZ());
-        SmartDashboard.putNumber("Throttle", oi.stick.getThrottle());
-        SmartDashboard.putNumber("POV", oi.stick.getPOV());
+        // SmartDashboard.putNumber("X-Axis", oi.stick.getX());
+        // SmartDashboard.putNumber("Y-Axis", oi.stick.getY());
+        // SmartDashboard.putNumber("Z-Axis", oi.stick.getZ());
+        // SmartDashboard.putNumber("Throttle", oi.stick.getThrottle());
+        // SmartDashboard.putNumber("POV", oi.stick.getPOV());
 
-        SmartDashboard.putNumber("Left Velocity", drivetrain.getVelocity(Side.Left, Unit.Meters));
-        SmartDashboard.putNumber("Right Velocity", drivetrain.getVelocity(Side.Right, Unit.Meters));
-        SmartDashboard.putNumber("Average Velocity", drivetrain.getVelocity(Side.Average, Unit.Meters));
-        SmartDashboard.putNumber("Left Raw Velocity", drivetrain.getVelocity(Side.Left));
-        SmartDashboard.putNumber("Right Raw Velocity", drivetrain.getVelocity(Side.Right));
-        SmartDashboard.putNumber("Average Raw Velocity", drivetrain.getVelocity(Side.Average));
+        // SmartDashboard.putNumber("Left Velocity", drivetrain.getVelocity(Side.Left, Unit.Meters));
+        // SmartDashboard.putNumber("Right Velocity", drivetrain.getVelocity(Side.Right, Unit.Meters));
+        // SmartDashboard.putNumber("Average Velocity", drivetrain.getVelocity(Side.Average, Unit.Meters));
+        // SmartDashboard.putNumber("Left Raw Velocity", drivetrain.getVelocity(Side.Left));
+        // SmartDashboard.putNumber("Right Raw Velocity", drivetrain.getVelocity(Side.Right));
+        // SmartDashboard.putNumber("Average Raw Velocity", drivetrain.getVelocity(Side.Average));
         SmartDashboard.putNumber("Left Position", drivetrain.getPosition(Side.Left, Unit.Meters));
         SmartDashboard.putNumber("Right Position", drivetrain.getPosition(Side.Right, Unit.Meters));
         SmartDashboard.putNumber("Left Raw Position", drivetrain.getPosition(Side.Left));
         SmartDashboard.putNumber("Right Raw Position", drivetrain.getPosition(Side.Right));
-        SmartDashboard.putNumber("Average Postion", drivetrain.getPosition(Side.Average, Unit.Meters));	
+        SmartDashboard.putNumber("Average Postion", drivetrain.getPosition(Side.Average, Unit.Meters));
 
         // Run commands while button is active
         oi.trigger.whileActive(new StraightDrive());
         oi.sideButton.whileActive(new Rotate());
+
         Scheduler.getInstance().run();
     }
 

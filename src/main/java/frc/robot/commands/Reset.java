@@ -28,8 +28,7 @@ public class Reset extends InstantCommand {
     // Called once when the command executes
     @Override
     protected void initialize() {
-        // Robot.drivetrain.getEndoderLeft().reset();
-        // Robot.drivetrain.getEndoderRight().reset();
+        Robot.drivetrain.resetEncoders();
     }
 
 }

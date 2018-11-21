@@ -7,6 +7,9 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain.Side;
@@ -33,18 +36,22 @@ public class EncoderDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.drivetrain.arcadeDrive(0.5, 0);
+        double ticksDistance = (distance / (Math.PI * 0.1524)) * 4096;
+        Robot.drivetrain.set(ControlMode.Position, ticksDistance);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return Robot.drivetrain.getPosition(Side.Average, Unit.Meters) >= distance;
+        double pos = Robot.drivetrain.getPosition(Side.Average, Unit.Meters);
+        System.out.println(pos);
+        return pos >= distance;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        DriverStation.reportWarning("Turning motots off", false);
         Robot.drivetrain.arcadeDrive(0, 0);
     }
 
