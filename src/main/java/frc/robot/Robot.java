@@ -105,7 +105,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         // new TeleopDrive().start();
-        Rotate rotate = new Rotate();
     }
 
     /**
@@ -134,7 +133,6 @@ public class Robot extends TimedRobot {
 
         // Run commands while button is active
         oi.trigger.whileActive(new StraightDrive());
-        new Rotate();
         Scheduler.getInstance().run();
     }
 
