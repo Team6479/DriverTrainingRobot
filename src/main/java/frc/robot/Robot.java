@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        // new TeleopDrive().start();
+
     }
 
     /**
@@ -117,6 +117,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Z-Axis", oi.stick.getZ());
         SmartDashboard.putNumber("Throttle", oi.stick.getThrottle());
         SmartDashboard.putNumber("POV", oi.stick.getPOV());
+        SmartDashboard.putBoolean("Tilt Mode", TeleopDrive.tiltMode);
 
         SmartDashboard.putNumber("Left Velocity", drivetrain.getVelocity(Side.Left, Unit.Meters));
         SmartDashboard.putNumber("Right Velocity", drivetrain.getVelocity(Side.Right, Unit.Meters));
