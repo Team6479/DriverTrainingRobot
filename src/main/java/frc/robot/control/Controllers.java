@@ -10,6 +10,10 @@ import frc.robot.Robot;
 import frc.robot.JoystickMap;
 
 
+/**
+ * Class to handle all controller values and buttons
+ * @author Aiden Onstott
+ */
 public class Controllers {
     public enum ControllerType {
         XBOX, JOYSTICK;
