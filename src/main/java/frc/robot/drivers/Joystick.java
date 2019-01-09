@@ -10,7 +10,7 @@ public class Joystick extends edu.wpi.first.wpilibj.Joystick {
     @Override
     public double getRawAxis(int axis) {
         double rawAxis = super.getRawAxis(axis);
-        if(rawAxis <= AXIS_THRESHOLD) {
+        if(Math.abs(rawAxis) <= AXIS_THRESHOLD) {
             rawAxis = 0;
         }
         return rawAxis;
