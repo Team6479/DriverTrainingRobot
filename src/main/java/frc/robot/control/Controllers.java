@@ -7,39 +7,44 @@
 
 package frc.robot.control;
 import frc.robot.Robot;
+import frc.robot.JoystickMap;
 
 
 public class Controllers {
-    private static String getControllerType() {
-        return "JOYSTICK";
+    public enum ControllerType {
+        XBOX, JOYSTICK;
+    }
+
+    private static ControllerType getControllerType() {
+        return ControllerType.JOYSTICK;
     }
 
     public static double getYAxis() {
-        if (getControllerType().equals("XBOX")) {
+        if (getControllerType() == ControllerType.XBOX) {
             // Get xbox controller
             return 0;
-        } else if (getControllerType().equals("JOYSTICK")) {
-            return -Robot.oi.stick.getRawAxis(1);
+        } else if (getControllerType() == ControllerType.JOYSTICK) {
+            return -Robot.oi.stick.getRawAxis(JoystickMap.joystickYAxis);
         } else {
             return 0;
         }
     }
 
     public static double getXAxis() {
-        if (getControllerType().equals("XBOX")) {
+        if (getControllerType() == ControllerType.XBOX) {
             // Get xbox controller
             return 0;
-        } else if (getControllerType().equals("JOYSTICK")) {
-            return Robot.oi.stick.getRawAxis(2);
+        } else if (getControllerType() == ControllerType.JOYSTICK) {
+            return Robot.oi.stick.getRawAxis(JoystickMap.joystickZAxis);
         } else {
             return 0;
         }
     }
 
     public static double getThrottle() {
-        if (getControllerType().equals("XBOX")) {
+        if (getControllerType() == ControllerType.XBOX) {
             return 1;
-        } else if (getControllerType().equals("JOYSTICK")) {
+        } else if (getControllerType() == ControllerType.JOYSTICK) {
             return Robot.oi.stick.getThrottle();
         } else {
             return 1;

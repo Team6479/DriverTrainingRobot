@@ -27,11 +27,11 @@ public class TeleopDrive extends Command {
     protected void initialize() {
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    // Called repeatedly when \this Command is scheduled to run
     @Override
     protected void execute() {
         //Execute arcadeDrive with the x axis and y axis
-        scale = (Controllers.getThrottle() + 1) / 2;
+        scale = (-Controllers.getThrottle() + 1) / 2;
         // Robot.drivetrain.arcadeDrive(Robot.oi.controller.getX(Hand.kLeft), Robot.oi.controller.getY(Hand.kLeft));
         Robot.drivetrain.arcadeDrive(Controllers.getYAxis() * scale, Controllers.getXAxis() * scale);
     }
