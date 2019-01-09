@@ -30,7 +30,7 @@ public class Controllers {
             // Get xbox controller
             return 0;
         } else if (getControllerType().equals("JOYSTICK")) {
-            return -Robot.oi.stick.getRawAxis(2);
+            return Robot.oi.stick.getRawAxis(2);
         } else {
             return 0;
         }
