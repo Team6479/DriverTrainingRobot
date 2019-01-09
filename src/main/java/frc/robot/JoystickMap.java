@@ -41,4 +41,8 @@ public class JoystickMap {
     public static final int joystickButton11 = 11;
     public static final int joystickButton12 = 12;
     public static final int joystickButton13 = 13;
+
+    public static final int joystickXAxis = 0;
+    public static final int joystickYAxis = 1;
+    public static final int joystickZAxis = 2;
 }

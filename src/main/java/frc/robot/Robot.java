@@ -131,8 +131,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Average Postion", drivetrain.getPosition(Side.Average, Unit.Meters));
 
         // Run commands while button is active
-        oi.trigger.whileActive(new StraightDrive());
-        oi.sideButton.whileActive(new Rotate());
+        // oi.trigger.whileActive(new StraightDrive());
+        // oi.sideButton.whileActive(new Rotate());
         Scheduler.getInstance().run();
     }
 

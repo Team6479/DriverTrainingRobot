@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.control.Controllers;
 
 /**
  * An example command. You can replace me with your own command.
@@ -26,13 +27,13 @@ public class TeleopDrive extends Command {
     protected void initialize() {
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    // Called repeatedly when \this Command is scheduled to run
     @Override
     protected void execute() {
         //Execute arcadeDrive with the x axis and y axis
-        scale = (-Robot.oi.stick.getThrottle() + 1) / 2;
+        scale = (-Controllers.getThrottle() + 1) / 2;
         // Robot.drivetrain.arcadeDrive(Robot.oi.controller.getX(Hand.kLeft), Robot.oi.controller.getY(Hand.kLeft));
-        Robot.drivetrain.arcadeDrive(-Robot.oi.stick.getRawAxis(1) * scale, Robot.oi.stick.getRawAxis(2) * scale);
+        Robot.drivetrain.arcadeDrive(Controllers.getYAxis() * scale, Controllers.getXAxis() * scale);
     }
 
     // Make this return true when this Command no longer needs to run execute()
